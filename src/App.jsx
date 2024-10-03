@@ -1,7 +1,6 @@
 import React from "react";
 
 function App() {
-  var q = 1;
   
   return (
     <div>
