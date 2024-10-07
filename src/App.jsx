@@ -13,19 +13,31 @@ export default class App extends React.Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  validateEmail = ()=>{
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email))
-        {alert("You have entered an invalid email address!")}
+  validateEmail = () => {
+    if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
+      alert("You have entered an invalid email address!");
+    }
+    return true;
   };
   handleCheckedChange = (e) => {
     this.setState({ [e.target.name]: e.target.checked });
   };
-  handleSend = ()=>{
-    if(this.state.isAgreeWithTerms){
-        alert("You have to agree with terms!");
-        return;
+  validateAgree = () => {
+    if (!this.state.isAgreeWithTerms) {
+      alert("You have to agree with terms!");
+      return false;
     }
-  }
+    return true;
+  };
+  handleSend = () => {
+    if (this.validateEmail() && this.validateAgree()){
+      alert("You connected");
+      this.setState( {
+        email: "",
+        isAgreeWithTerms: false,
+      })
+    }
+  };
 
   render() {
     const { email, isAgreeWithTerms } = this.state;
@@ -47,10 +59,11 @@ export default class App extends React.Component {
             name="isAgreeWithTerms"
             checked={isAgreeWithTerms}
             onChange={this.handleCheckedChange}
-          />I agree with terms and conditions
+          />
+          I agree with terms and conditions
         </label>
         <br />
-        <button onClick = {this.handleSend}>Send</button>
+        <button onClick={this.handleSend}>Send</button>
       </div>
     );
   }
