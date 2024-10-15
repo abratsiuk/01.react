@@ -1,27 +1,23 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class App extends Component {
-    state = {
-        count: 0,
+function App() {
+    const [count, setCount] = useState(0);
+
+    const increment = () => {
+        setCount(count + 1);
     };
 
-    increment = () => {
-        this.setState({ count: this.state.count + 1 });
+    const decrement = () => {
+        setCount(count - 1);
     };
 
-    decrement = () => {
-        this.setState({ count: this.state.count - 1 });
-    };
-
-    render() {
-        return (
-            <div className='App'>
-                <button onClick={this.decrement}>-</button>
-                <span>{this.state.count}</span>
-                <button onClick={this.increment}>+</button>
-            </div>
-        );
-    }
+    return (
+        <div className='App'>
+            <button onClick={decrement}>-</button>
+            <span>{count}</span>
+            <button onClick={increment}>+</button>
+        </div>
+    );
 }
 
 export default App;
