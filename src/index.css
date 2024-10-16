@@ -1,0 +1,21 @@
+.component {
+    border-radius: 10px;
+    padding: 0.5rem;
+
+    color: white;
+}
+
+.count-value {
+    margin: 0 0.2rem;
+}
+
+.component-body {
+    border: 1px solid white;
+    min-height: 200px;
+    min-width: 200px;
+    padding: 0.5rem;
+}
+
+.app-with-effect {
+    background-color: royalblue;
+}

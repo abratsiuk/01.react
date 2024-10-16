@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from 'react';
+import AppWithEffect from './AppWithEffect';
+import './index.css';
 
 function App() {
-  
-  return (
-    <div>
-      hello world
-    </div>
-  );
+    const [isVisible, setIsVisible] = useState(true);
+    return (
+        <div>
+            {isVisible ? (
+                <>
+                    <button onClick={() => setIsVisible(false)}>hide</button>
+                    <AppWithEffect />
+                </>
+            ) : (
+                <button onClick={() => setIsVisible(true)}>show</button>
+            )}
+        </div>
+    );
 }
 
 export default App;
