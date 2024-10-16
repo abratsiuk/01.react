@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from 'react';
 
-function AppWithEffect() {
+function SubChildWithEffect() {
     const [count, setCount] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        console.log(count, 'AppWithEffect 1 mounted');
+        console.log(count, 'SubChildWithEffect 1 mounted');
 
         return () => {
-            console.log(count, 'AppWithEffect 1 cleanUp');
+            console.log(count, 'SubChildWithEffect 1 cleanUp');
         };
     }, []);
     useEffect(() => {
-        console.log(count, 'AppWithEffect 2 update');
+        console.log(count, 'SubChildWithEffect 2 update');
 
         return () => {
-            console.log(count, 'AppWithEffect 2 update cleanUp');
+            console.log(count, 'SubChildWithEffect 2 update cleanUp');
         };
     }, [count]);
 
+    console.log(count, 'SubChildWithEffect before render');
     return (
-        <div className='component app-with-effect'>
+        <div className='component subChildWithEffect'>
+            <h3>SubChildWithEffect</h3>
             <div className='toolbar'>
                 <button onClick={() => setCount(count - 1)}>-</button>
                 <span className='count-value'>{count}</span>
@@ -42,4 +44,4 @@ function AppWithEffect() {
     );
 }
 
-export default AppWithEffect;
+export default SubChildWithEffect;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AppWithEffect from './AppWithEffect';
+import AppWithEffect from './component/AppWithEffect';
 import './index.css';
 
 function App() {
