@@ -14,7 +14,9 @@ function App() {
     return (
         <div className='App'>
             <button onClick={decrement}>-</button>
-            <span>{count}</span>
+            <span style={{ display: 'inline-block', margin: '0 0.5rem' }}>
+                {count}
+            </span>
             <button onClick={increment}>+</button>
         </div>
     );
