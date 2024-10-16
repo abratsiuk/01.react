@@ -1,61 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-export default class App extends React.Component {
-    state = {
-        count: 0,
-        isCounting: false,
-    };
+function App() {
+    const [count, setCount] = useState(0);
+    const [isCounting, setIsCounting] = useState(false);
+    let counterId = useRef(null);
 
-    componentDidMount() {
-        const userCount = localStorage.getItem('count');
-        if (userCount) this.setState({ count: +userCount });
-    }
+    // const componentDidUpdate = () =>{
+    //     localStorage.setItem('count', count);
+    // }
 
-    componentDidUpdate() {
-        localStorage.setItem('count', this.state.count);
-    }
-
-    handleReset = () => {
-        this.setState({
-            count: 0,
-            isCounting: false,
-        });
-        clearInterval(this.timerID);
-    };
-
-    handleStart = () => {
-        this.setState({
-            isCounting: true,
-        });
-        this.counterId = setInterval(() => {
-            this.setState({ count: this.state.count + 1 });
+    const handleStart = () => {
+        console.log('start', count, isCounting, counterId);
+        setIsCounting(true);
+        counterId = setInterval(() => {
+            setCount((prev) => prev + 1);
         }, 1000);
     };
 
-    handleStop = () => {
-        clearInterval(this.counterId);
-        this.setState({
-            isCounting: false,
-        });
+    const handleStop = () => {
+        console.log('stop', count, isCounting, counterId);
+        clearInterval(counterId);
+        setIsCounting(false);
     };
 
-    componentWillUnmount() {
-        clearInterval(this.counterId);
-        this.handleStop();
-    }
+    const handleReset = () => {
+        console.log('reset', count, isCounting, counterId);
+        setCount(0);
+        setIsCounting(false);
+        clearInterval(counterId);
+    };
 
-    render() {
-        return (
-            <div className='App'>
-                <h1>React Timer</h1>
-                <h3>{this.state.count}</h3>
-                {!this.state.isCounting ? (
-                    <button onClick={this.handleStart}>Start</button>
-                ) : (
-                    <button onClick={this.handleStop}>Stop</button>
-                )}
-                <button onClick={this.handleReset}>Reset</button>
-            </div>
-        );
-    }
+    useEffect(() => {
+        // const userCount = localStorage.getItem('count');
+        // if (userCount) setCount({ count: +userCount });
+        console.log('useEffect', count, isCounting, counterId);
+        return () => {
+            clearInterval(counterId);
+            handleStop();
+        };
+    }, []);
+
+    return (
+        <div className='App'>
+            <h1>React Timer</h1>
+            <h3>{count}</h3>
+            {!isCounting ? (
+                <button onClick={handleStart}>Start</button>
+            ) : (
+                <button onClick={handleStop}>Stop</button>
+            )}
+            <button onClick={handleReset}>Reset</button>
+        </div>
+    );
 }
+
+export default App;
