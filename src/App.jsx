@@ -5,40 +5,64 @@ function App() {
     const [isCounting, setIsCounting] = useState(false);
     let counterId = useRef(null);
 
-    // const componentDidUpdate = () =>{
-    //     localStorage.setItem('count', count);
-    // }
-
     const handleStart = () => {
-        console.log('start', count, isCounting, counterId);
+        console.log(
+            `start, count: ${count}, isCounting: ${isCounting}, counterId: ${counterId.current}`
+        );
         setIsCounting(true);
-        counterId = setInterval(() => {
+        counterId.current = setInterval(() => {
             setCount((prev) => prev + 1);
         }, 1000);
     };
 
     const handleStop = () => {
-        console.log('stop', count, isCounting, counterId);
-        clearInterval(counterId);
+        console.log(
+            `stop, count: ${count}, isCounting: ${isCounting}, counterId: ${counterId.current}`
+        );
+
+        clearInterval(counterId.current);
+        counterId.current = null;
+
         setIsCounting(false);
     };
 
     const handleReset = () => {
-        console.log('reset', count, isCounting, counterId);
+        console.log(
+            `reset, count: ${count}, isCounting: ${isCounting}, counterId: ${counterId.current}`
+        );
+
+        handleStop();
         setCount(0);
-        setIsCounting(false);
-        clearInterval(counterId);
     };
 
+    // useEffect(() => {
+    //     const userCount = localStorage.getItem('count');
+    //     console.log(
+    //         `useEffect - mounting, load from storage, userCount: ${userCount}`
+    //     );
+
+    //     if (userCount) setCount({ count: +userCount });
+    //     return () => {
+    //         console.log(
+    //             `useEffect - unmounting, count: ${count}, isCounting: ${isCounting}, counterId: ${counterId.current}`
+    //         );
+    //         if (counterId.current) clearInterval(counterId.current);
+    //     };
+    // }, []);
+
     useEffect(() => {
-        // const userCount = localStorage.getItem('count');
-        // if (userCount) setCount({ count: +userCount });
-        console.log('useEffect', count, isCounting, counterId);
+        console.log(`useEffect 1 - mounting`);
         return () => {
-            clearInterval(counterId);
-            handleStop();
+            console.log(`useEffect 1 - cleanUp`);
         };
     }, []);
+
+    useEffect(() => {
+        console.log(
+            `useEffect - change count and write to localStorage, count: ${count}`
+        );
+        localStorage.setItem('count', count);
+    }, [count]);
 
     return (
         <div className='App'>
