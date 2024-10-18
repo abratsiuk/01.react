@@ -10,7 +10,6 @@ function Timer() {
     const [isCounting, setIsCounting] = useState(false);
     let timerIdRef = useRef(null);
 
-    console.log('Timer rendered');
     const handleStart = () => {
         setIsCounting(true);
     };
@@ -35,6 +34,7 @@ function Timer() {
             }, 1000);
         }
         return () => {
+            console.log('unmount');
             timerIdRef.current && clearInterval(timerIdRef.current);
             timerIdRef.current = null;
         };
