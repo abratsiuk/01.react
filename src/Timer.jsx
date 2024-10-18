@@ -1,49 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-function Timer() {
-    const [count, setCount] = useState(0);
-    const [isCounting, setIsCounting] = useState(false);
-    let counterId = useRef(null);
+function getDefaultValue() {
+    const userCount = localStorage.getItem('count');
+    return userCount ? +userCount : 0;
+}
 
+function Timer() {
+    const [count, setCount] = useState(getDefaultValue());
+    const [isCounting, setIsCounting] = useState(false);
+    let timerIdRef = useRef(null);
+
+    console.log('Timer rendered');
     const handleStart = () => {
         setIsCounting(true);
-        counterId.current = setInterval(() => {
-            setCount((prev) => prev + 1);
-        }, 1000);
     };
 
     const handleStop = () => {
-        if (counterId.current) {
-            clearInterval(counterId.current);
-            counterId.current = null;
-            console.log(`-|-|clear interval, counterId: ${counterId.current}`);
-        }
         setIsCounting(false);
     };
 
     const handleReset = () => {
-        handleStop();
+        setIsCounting(false);
         setCount(0);
     };
-
-    useEffect(() => {
-        const userCount = localStorage.getItem('count');
-        if (userCount) setCount(+userCount);
-
-        return () => {
-            if (counterId.current) {
-                clearInterval(counterId.current);
-            }
-        };
-    }, []);
 
     useEffect(() => {
         localStorage.setItem('count', count);
     }, [count]);
 
+    useEffect(() => {
+        if (isCounting) {
+            timerIdRef.current = setInterval(() => {
+                setCount((prevCount) => prevCount + 1);
+            }, 1000);
+        }
+        return () => {
+            timerIdRef.current && clearInterval(timerIdRef.current);
+            timerIdRef.current = null;
+        };
+    }, [isCounting]);
+
     return (
         <div className='App'>
-            <h1>React Timer</h1>
+            <h1>React Timer 2</h1>
             <h3>{count}</h3>
             {!isCounting ? (
                 <button onClick={handleStart}>Start</button>
