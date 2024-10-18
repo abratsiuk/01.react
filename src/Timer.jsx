@@ -48,9 +48,7 @@ function Timer() {
 
         if (userCount) setCount(+userCount);
         return () => {
-            console.log(
-                `_____useEffect - unmounting, count: ${count}, isCounting: ${isCounting}, counterId: ${counterId.current}`
-            );
+            console.log(`_____useEffect - unmounting`);
             if (counterId.current) {
                 clearInterval(counterId.current);
                 console.log(
