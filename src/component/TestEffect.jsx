@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import TestEffect from './TestEffect';
 
-function SubChildWithEffect() {
+function TestEffect() {
     const [count, setCount] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        console.log(count, 'SubChildWithEffect 1 mounted');
+        console.log(count, 'TestEffect 1 mounted');
 
         return () => {
-            console.log(count, 'SubChildWithEffect 1 cleanUp');
+            console.log(count, 'TestEffect 1 cleanUp');
         };
     }, []);
     useEffect(() => {
-        console.log(count, 'SubChildWithEffect 2 update');
+        console.log(count, 'TestEffect 2 update');
 
         return () => {
-            console.log(count, 'SubChildWithEffect 2 update cleanUp');
+            console.log(count, 'TestEffect 2 update cleanUp');
         };
     }, [count]);
 
-    console.log(count, 'SubChildWithEffect before render');
+    console.log(count, 'TestEffect before render');
     return (
-        <div className='component subChildWithEffect'>
-            <h3>SubChildWithEffect</h3>
+        <div className='component testEffect'>
+            <h3>TestEffect</h3>
             <div className='toolbar'>
                 <button onClick={() => setCount(count - 1)}>-</button>
                 <span className='count-value'>{count}</span>
@@ -35,7 +34,7 @@ function SubChildWithEffect() {
                         <button onClick={() => setIsVisible(false)}>
                             hide
                         </button>
-                        <TestEffect />
+                        <div>hello word</div>
                     </>
                 ) : (
                     <button onClick={() => setIsVisible(true)}>show</button>
@@ -45,4 +44,4 @@ function SubChildWithEffect() {
     );
 }
 
-export default SubChildWithEffect;
+export default TestEffect;
