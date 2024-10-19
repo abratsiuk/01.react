@@ -5,19 +5,34 @@ function TestEffect() {
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        console.log(count, 'TestEffect 1 mounted');
+        console.log(count, '-[]-> TestEffect 1 mounted');
 
         return () => {
-            console.log(count, 'TestEffect 1 cleanUp');
+            console.log(count, '-[]-| TestEffect 1 cleanUp');
         };
     }, []);
     useEffect(() => {
-        console.log(count, 'TestEffect 2 update');
+        console.log(count, '=count=> TestEffect 2 update');
 
         return () => {
-            console.log(count, 'TestEffect 2 update cleanUp');
+            console.log(count, '=count=| TestEffect 2 update cleanUp');
         };
     }, [count]);
+    useEffect(() => {
+        console.log(count, '=isVisible=> TestEffect 2 update');
+
+        return () => {
+            console.log(count, '=isVisible=| TestEffect 2 update cleanUp');
+        };
+    }, [isVisible]);
+
+    useEffect(() => {
+        console.log(count, '-_-> testEffect without [] executed');
+
+        return () => {
+            console.log(count, '-_-| testEffect without [] cleanUp executed');
+        };
+    });
 
     console.log(count, 'TestEffect before render');
     return (
