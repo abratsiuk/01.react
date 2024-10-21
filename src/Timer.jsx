@@ -34,7 +34,6 @@ function Timer() {
             }, 1000);
         }
         return () => {
-            console.log('unmount');
             timerIdRef.current && clearInterval(timerIdRef.current);
             timerIdRef.current = null;
         };
